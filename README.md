@@ -10,10 +10,10 @@ https://dummyjson.com/docs/auth
 
 So make sure that you have covered all the following tasks:
 
-- design login, register and profile pages.
-- implement navigation between screen.
+- design login, register and profile screens.
+- implement navigation between screens.
 - implement login, register, remember me and log out functionalities.
-- display user details in profile page
+- display user details in profile screen.
 
 That's all, fork the repository and start working on it.
 
