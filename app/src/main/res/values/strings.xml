@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Auth</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="log_in">Log in</string>
+    <string name="don_t_have_and_account">Don\'t have and account?</string>
+    <string name="register">Register</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="have_problem">Have a problem?</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="gender">Gender</string>
+    <string name="log_out">Log out</string>
 </resources>
