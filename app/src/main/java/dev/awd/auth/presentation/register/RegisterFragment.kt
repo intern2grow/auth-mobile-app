@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import dev.awd.auth.AuthApplication
 import dev.awd.auth.R
 import dev.awd.auth.databinding.FragmentRegisterBinding
-import dev.awd.auth.utils.Response
+import dev.awd.auth.presentation.AuthUiState
 import dev.awd.auth.utils.invisibleIf
 import dev.awd.auth.utils.text
 import dev.awd.auth.utils.viewModelFactory
@@ -66,19 +66,19 @@ class RegisterFragment : Fragment() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
 
-                viewModel.registerState.collectLatest { state ->
+                viewModel.registerUiState.collectLatest { state ->
 
-                    binding.progressBar visibleIf (state is Response.Loading)
-                    binding.registerBtn invisibleIf (state is Response.Loading)
+                    binding.progressBar visibleIf (state is AuthUiState.Loading)
+                    binding.registerBtn invisibleIf (state is AuthUiState.Loading)
 
                     withContext(Dispatchers.Main) {
                         when (state) {
-                            is Response.Failure -> {
+                            is AuthUiState.Failure -> {
                                 Snackbar.make(binding.root, state.error, Snackbar.LENGTH_SHORT)
                                     .show()
                             }
 
-                            is Response.Success<*> -> {
+                            is AuthUiState.Success -> {
                                 navToProfile()
                             }
 

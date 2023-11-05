@@ -3,12 +3,13 @@ package dev.awd.auth.presentation.register
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.awd.auth.data.ApiResponse
+import dev.awd.auth.domain.models.User
 import dev.awd.auth.domain.usecase.RegisterUseCase
 import dev.awd.auth.domain.validationusecases.ValidateEmailUseCase
 import dev.awd.auth.domain.validationusecases.ValidatePasswordUseCase
-import dev.awd.auth.utils.Response
+import dev.awd.auth.presentation.AuthUiState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -22,20 +23,23 @@ class RegisterViewModel(
     }
 
 
-    var registerState: MutableStateFlow<Response> = MutableStateFlow(Response.Loading)
+    var registerUiState: MutableStateFlow<AuthUiState> = MutableStateFlow(AuthUiState.Loading)
         private set
 
     fun register(email: String, username: String, password: String) =
         viewModelScope.launch {
             if (isCredentialsValid(email, password)) {
-                registerUseCase(email, username, password).catch {
-                    registerState.value = Response.Failure(it.message!!)
-                }.collectLatest {
-                    Log.d(TAG, "register: $it")
-                    registerState.value = Response.Success(it)
+                registerUseCase(email, username, password).collectLatest { response ->
+                    registerUiState.value =
+                        when (response) {
+                            is ApiResponse.Success<*> -> AuthUiState.Success(response.data as User)
+                            is ApiResponse.Failure -> AuthUiState.Failure(response.error)
+                            is ApiResponse.Loading -> AuthUiState.Loading
+                        }
+
                 }
             } else {
-                registerState.value = Response.Failure("Invalid Credentials")
+                registerUiState.value = AuthUiState.Failure("Invalid Credentials")
                 Log.w(TAG, "register: Invalid Credentials")
             }
         }
