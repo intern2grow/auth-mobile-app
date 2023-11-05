@@ -1,7 +1,6 @@
 package dev.awd.auth
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
