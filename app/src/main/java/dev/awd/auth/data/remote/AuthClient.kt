@@ -9,7 +9,7 @@ interface AuthClient {
     suspend fun login(@Body userRequest: UserRequest): UserResponse
 
     @POST("users/add")
-    suspend fun register(@Body body: UserRequest): UserResponse
+    suspend fun register(@Body userRequest: UserRequest): UserResponse
 
     @POST("logout")
     suspend fun logOut(): UserResponse

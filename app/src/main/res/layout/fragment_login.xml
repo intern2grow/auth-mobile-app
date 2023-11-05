@@ -100,6 +100,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/remember_me_checkbox"
         app:layout_constraintEnd_toEndOf="@id/guideline_end" />
 
+
     <Button
         android:id="@+id/login_btn"
         android:layout_width="0dp"
@@ -111,6 +112,17 @@
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/remember_me_checkbox" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/login_btn"
+        app:layout_constraintEnd_toEndOf="@id/login_btn"
+        app:layout_constraintStart_toStartOf="@id/login_btn"
+        app:layout_constraintTop_toTopOf="@id/login_btn" />
 
     <TextView
         android:id="@+id/do_not_have_tv"

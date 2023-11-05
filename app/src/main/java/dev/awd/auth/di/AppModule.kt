@@ -27,7 +27,6 @@ object AppModuleImpl : AppModule {
 
     private const val BASE_URL = "https://dummyjson.com/"
 
-
     override val authClient: AuthClient by lazy {
 
         Retrofit.Builder()
