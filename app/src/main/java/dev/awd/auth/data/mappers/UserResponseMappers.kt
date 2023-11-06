@@ -6,6 +6,7 @@ import dev.awd.auth.domain.models.User
 fun UserResponse.toUser() = User(
     email = email ?: "email@provider.com",
     username = username ?: "username",
-    gender = gender,
-    avatarUrl = image
+    gender = gender?.ifBlank { "Male" },
+    avatarUrl = image,
+    displayName = "$firstName $lastName"
 )

@@ -11,7 +11,7 @@ interface AuthClient {
     @POST("users/add")
     suspend fun register(@Body userRequest: UserRequest): UserResponse
 
-    @POST("logout")
-    suspend fun logOut(): UserResponse
+    @POST("http/200")
+    suspend fun logOut()
 
 }
