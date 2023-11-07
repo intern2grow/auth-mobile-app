@@ -58,6 +58,9 @@ class RegisterFragment : Fragment() {
             register()
             listenToRegisterStatus()
         }
+        binding.loginTxtBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun register() {

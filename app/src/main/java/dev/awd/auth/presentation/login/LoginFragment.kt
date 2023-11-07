@@ -66,8 +66,9 @@ class LoginFragment : Fragment() {
     private fun login() {
         val username = binding.usernameField.usernameIl.text
         val password = binding.passwordField.passwordIl.text
+        val rememberMe  = binding.rememberMeCheckbox.isChecked
 
-        viewModel.login(username, password, binding.rememberMeCheckbox.isChecked)
+        viewModel.login(username, password, rememberMe)
     }
 
     private fun listenToLoginStatus() {
