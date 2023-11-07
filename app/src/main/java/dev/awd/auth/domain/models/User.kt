@@ -2,7 +2,9 @@ package dev.awd.auth.domain.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class User(
     val username: String,
     val displayName: String,
@@ -17,6 +19,8 @@ data class User(
         parcel.readString(),
         parcel.readString()
     )
+
+    constructor() : this(Parcel.obtain())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(username)

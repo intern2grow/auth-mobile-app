@@ -9,6 +9,7 @@ import dev.awd.auth.domain.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.HttpException
 
 class AuthRepoImpl(private val authClient: AuthClient) : AuthRepository {
     override suspend fun login(username: String, password: String) =
@@ -22,8 +23,11 @@ class AuthRepoImpl(private val authClient: AuthClient) : AuthRepository {
                 )
                 Log.d("Auth Repo", "Login Succeeded: $response")
                 ApiResponse.Success(response.toUser())
+            } catch (e: HttpException) {
+                val errorMessage =
+                    if (e.code() == 400) "Only API users can login" else e.message
+                ApiResponse.Failure(errorMessage ?: "unknown error")
             } catch (e: Throwable) {
-                Log.e("Auth Repo", "Login failed: ${e.message}")
                 ApiResponse.Failure(e.message ?: "unknown error")
             }
         ).flowOn(Dispatchers.IO)
@@ -41,7 +45,6 @@ class AuthRepoImpl(private val authClient: AuthClient) : AuthRepository {
                 ApiResponse.Success(response.toUser())
 
             } catch (e: Throwable) {
-                e.printStackTrace()
                 Log.e("Auth Repo", "register failed for: ${e.message}")
                 ApiResponse.Failure(e.message ?: "unknown error")
             }

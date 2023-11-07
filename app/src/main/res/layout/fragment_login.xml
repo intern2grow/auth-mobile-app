@@ -37,11 +37,23 @@
 
 
     <include
-        android:id="@+id/top_Image"
+        android:id="@+id/stacked_background"
         layout="@layout/stacked_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/intern2Grow_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/intern_logo"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
     <TextView
         android:id="@+id/login_tv"
@@ -54,7 +66,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/top_Image" />
+        app:layout_constraintTop_toBottomOf="@id/intern2Grow_logo" />
 
     <include
         android:id="@+id/username_field"

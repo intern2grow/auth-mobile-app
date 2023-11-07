@@ -27,7 +27,10 @@ class ProfileFragment : Fragment() {
 
     private val viewModel by viewModels<ProfileViewModel>(ownerProducer = { this }) {
         viewModelFactory {
-            ProfileViewModel(AuthApplication.appModule.logoutUseCase)
+            ProfileViewModel(
+                AuthApplication.appModule.logoutUseCase,
+                AuthApplication.appModule.clearUserDataUseCase
+            )
         }
     }
     private val args: ProfileFragmentArgs by navArgs()

@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         val nav_version = "2.7.5"
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
+        classpath ("org.jetbrains.kotlin:kotlin-serialization:1.9.0")
     }
 }
 

@@ -9,11 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dev.awd.auth.AuthApplication
-import dev.awd.auth.R
 import dev.awd.auth.databinding.FragmentRegisterBinding
+import dev.awd.auth.domain.models.User
 import dev.awd.auth.presentation.AuthUiState
 import dev.awd.auth.utils.invisibleIf
 import dev.awd.auth.utils.text
@@ -35,7 +35,8 @@ class RegisterFragment : Fragment() {
                     RegisterViewModel(
                         registerUseCase,
                         validateEmailUseCase,
-                        validatePasswordUseCase
+                        validatePasswordUseCase,
+                        setUserDataUseCase
                     )
                 }
             }
@@ -54,12 +55,17 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.registerBtn.setOnClickListener {
-            val email = binding.emailField.emailIl.text
-            val username = binding.usernameField.usernameIl.text
-            val password = binding.passwordField.passwordIl.text
-            viewModel.register(email, username, password)
+            register()
             listenToRegisterStatus()
         }
+    }
+
+    private fun register() {
+        val email = binding.emailField.emailIl.text
+        val username = binding.usernameField.usernameIl.text
+        val password = binding.passwordField.passwordIl.text
+        val rememberMe = binding.rememberMeCheckbox.isChecked
+        viewModel.register(email, username, password, rememberMe)
     }
 
     private fun listenToRegisterStatus() {
@@ -78,8 +84,8 @@ class RegisterFragment : Fragment() {
                                     .show()
                             }
 
-                            is AuthUiState.Success -> {
-                                navToProfile()
+                            is AuthUiState.Success<*> -> {
+                                navToProfile(userData = state.data as User)
                             }
 
                             else -> {}
@@ -92,9 +98,9 @@ class RegisterFragment : Fragment() {
     }
 
 
-    private fun navToProfile() {
-        Navigation.findNavController(binding.root).navigate(
-            R.id.action_registerFragment_to_profileFragment
-        )
+    private fun navToProfile(userData: User) {
+        RegisterFragmentDirections.actionRegisterFragmentToProfileFragment(userArg = userData).run {
+            findNavController().navigate(this)
+        }
     }
 }

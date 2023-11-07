@@ -10,10 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dev.awd.auth.AuthApplication
 import dev.awd.auth.R
 import dev.awd.auth.databinding.FragmentLoginBinding
+import dev.awd.auth.domain.models.User
 import dev.awd.auth.presentation.AuthUiState
 import dev.awd.auth.utils.invisibleIf
 import dev.awd.auth.utils.text
@@ -29,7 +31,15 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels(ownerProducer = { this }) {
-        viewModelFactory { LoginViewModel(AuthApplication.appModule.loginUseCase) }
+        viewModelFactory {
+            AuthApplication.appModule.run {
+                LoginViewModel(
+                    loginUseCase,
+                    setUserDataUseCase,
+                    getUserDataUseCase
+                )
+            }
+        }
     }
 
     override fun onCreateView(
@@ -42,9 +52,10 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listenToLoginStatus()
+
         binding.loginBtn.setOnClickListener {
             login()
-            listenToLoginStatus()
         }
         binding.registerTxtBtn.setOnClickListener {
             Navigation.findNavController(view)
@@ -56,7 +67,7 @@ class LoginFragment : Fragment() {
         val username = binding.usernameField.usernameIl.text
         val password = binding.passwordField.passwordIl.text
 
-        viewModel.login(username, password)
+        viewModel.login(username, password, binding.rememberMeCheckbox.isChecked)
     }
 
     private fun listenToLoginStatus() {
@@ -73,7 +84,9 @@ class LoginFragment : Fragment() {
                                     .show()
                             }
 
-                            is AuthUiState.Success -> navToProfile()
+                            is AuthUiState.Success<*> -> {
+                                navToProfile(userData = state.data as User)
+                            }
 
                             else -> {}
 
@@ -84,9 +97,10 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun navToProfile() {
-        Navigation.findNavController(binding.root).navigate(
-            R.id.action_loginFragment_to_profileFragment
-        )
+    private fun navToProfile(userData: User) {
+
+        LoginFragmentDirections.actionLoginFragmentToProfileFragment(userArg = userData).run {
+            findNavController().navigate(this)
+        }
     }
 }
