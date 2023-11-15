@@ -1,22 +1,34 @@
 # auth-mobile-app
 
-Hello there, your task is to convert the following figma design into a mobile app:
+ Android application built using Kotlin as a task from [Intern2Grow](https://intern2grow.vercel.app/)
 
-https://www.figma.com/file/8c8KBj7I6VW5sbuJNRbF7E/auth-screens?type=design&node-id=0%3A1&mode=design&t=yzOIpKZWeIWjbMO3-1
 
-Then use one of the following APIs to implement authentication:
+![design-1700055357703](https://github.com/mahmoodawd/auth-mobile-app/assets/63718329/d599d253-84c9-4f81-b0cb-b31f6ebd925f)
 
-https://dummyjson.com/docs/auth
 
-https://reqres.in/
 
-So make sure that you have covered all the following tasks:
 
-- design login, register and profile screens.
-- implement navigation between screens.
-- implement login, register, remember me and log out functionalities.
-- display user details in profile screen.
+## Features
+- Registration and signup functionalities using [DummyJsonAPI](https://dummyjson.com/docs/auth)
+- Display Profile details.
+- Remember me feature for auto login.
 
-That's all, fork the repository and start working on it.
+## Libraries and Technologies
 
-Best of luck.
+### ViewBinding
+### Manual Dependency Injection
+### Navigation Component
+### Retrofit for Networking 
+### Coroutines
+### DataStore to save user credentials locally
+### Kotlin Serialization
+### Image Loading with Glide
+
+
+
+
+
+
+## Contact
+
+For any inquiries or questions, you can reach me at [<img align="center" src="https://img.shields.io/badge/gmail-%23FF0000?style=plastic&logo=gmail&logoColor=white"/>](mailto:mahmooodawd@gmail.com).
